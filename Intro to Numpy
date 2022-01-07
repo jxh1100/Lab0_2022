@@ -1,0 +1,424 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Lab 5\n",
+    "This lab covers an introduction to Numpy, Matplotlib, and Bayesian Classifiers. Be sure to understand the Numpy-Library-Essentials notebook "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "a = np.zeros(10)\n",
+    "\n",
+    "print(a)\n",
+    "display(a)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Matplotlib\n",
+    "\n",
+    "Matplotlib is a library that allows for easy plotting. This section shows some useful functions for plotting.\n",
+    "\n",
+    "Jupyter notebook supports magic commands (% commands) to change the type of plots (interactive, inline, ect.) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# We generally import matplotlib.pyplot as plt, to make typing our code easier\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# We can plot our zero's array using plt.plot(a)\n",
+    "my_plot = plt.plot(a)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# magic command to have interactive graphs in a new window\n",
+    "%matplotlib qt \n",
+    "plt.plot(a); "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# magic command to have graphs inline\n",
+    "%matplotlib inline\n",
+    "plt.plot(a); # Note the semicolon, this prevents jupyter notebook showing the output (return value) of this line"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Now, lets add some labels\n",
+    "plt.plot(a)\n",
+    "plt.ylabel('Some Label')\n",
+    "plt.xlabel('Another Label')\n",
+    "plt.title('My Title');"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# What if we have x and y values??\n",
+    "b = np.ones(10)\n",
+    "c = np.array(range(10))\n",
+    "display(b, c)\n",
+    "plt.plot(c, b);"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Can we add colors and shapes?? Yes!\n",
+    "\n",
+    "# evenly sampled time at 200ms intervals\n",
+    "t = np.arange(0., 5., 0.2)\n",
+    "\n",
+    "# red dashes, blue squares and green triangles\n",
+    "plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')\n",
+    "\n",
+    "# We can add a legend as well!\n",
+    "plt.legend(['Linear', 'Quadratic', 'Cubic']);"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# We can do other types of plots, such as scatter\n",
+    "data = {'a': np.arange(50),\n",
+    "        'c': np.random.randint(0, 50, 50),\n",
+    "        'd': np.random.randn(50)}\n",
+    "data['b'] = data['a'] + 10 * np.random.randn(50)\n",
+    "data['d'] = np.abs(data['d']) * 100\n",
+    "\n",
+    "plt.scatter('a', 'b', c='c', s='d', data=data)\n",
+    "plt.xlabel('entry a')\n",
+    "plt.ylabel('entry b');"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Or plot with Categorical (with subplots!)\n",
+    "names = ['group_a', 'group_b', 'group_c']\n",
+    "values = [1, 10, 100]\n",
+    "\n",
+    "plt.figure(figsize=(9, 3))\n",
+    "\n",
+    "plt.subplot(131)\n",
+    "plt.bar(names, values)\n",
+    "plt.subplot(132)\n",
+    "plt.scatter(names, values)\n",
+    "plt.subplot(133)\n",
+    "plt.plot(names, values)\n",
+    "plt.suptitle('Categorical Plotting');"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Another subplot example\n",
+    "def f(t):\n",
+    "    return np.exp(-t) * np.cos(2*np.pi*t)\n",
+    "\n",
+    "t1 = np.arange(0.0, 5.0, 0.1)\n",
+    "t2 = np.arange(0.0, 5.0, 0.02)\n",
+    "\n",
+    "plt.figure()\n",
+    "plt.subplot(211)\n",
+    "plt.plot(t1, f(t1), 'bo', t2, f(t2), 'k')\n",
+    "\n",
+    "plt.subplot(212)\n",
+    "plt.plot(t2, np.cos(2*np.pi*t2), 'r--');"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Lastly, we can create a histogram (and add text to it)\n",
+    "mu, sigma = 100, 15\n",
+    "x = mu + sigma * np.random.randn(10000)\n",
+    "\n",
+    "# the histogram of the data\n",
+    "n, bins, patches = plt.hist(x, 50, density=1, facecolor='g', alpha=0.75)\n",
+    "\n",
+    "\n",
+    "plt.xlabel('Smarts')\n",
+    "plt.ylabel('Probability')\n",
+    "plt.title('Histogram of IQ')\n",
+    "plt.text(60, .025, r'$\\mu=100,\\ \\sigma=15$')\n",
+    "plt.axis([40, 160, 0, 0.03])\n",
+    "plt.grid(True);"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Bayesian Classifiers\n",
+    "\n",
+    "Now we have some useful tools at our disposal, lets create a bayesian classifer."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Your Code Here for Making the Stressed/Not_Stressed Data\n",
+    "    Look into numpy.random.normal()'''\n",
+    "stressed =                # 1000 samples with mean 100 and standard deviation 10\n",
+    "not_stressed =            # 1100 samples with mean 70 and standard deviation 10\n",
+    "stressed_labels =         # Array with stress labels (zeros)\n",
+    "not_stressed_labels =     # Array with not stressed labels (ones)\n",
+    "\n",
+    "'''Create dataX and dataY that contain your entire X and Y datasets, respectively '''"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Plot your two distributions as a histogram'''\n",
+    "\n",
+    "\n",
+    "''' Name your x axis Heart-Rate and Y axis Probability'''\n",
+    "\n",
+    "\n",
+    "''' Place a grid on your plot (hint: google is your friend)'''"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Classifier:\n",
+    "    ''' This is a class prototype for any classifier. It contains two empty methods: predict, fit'''\n",
+    "    def __init__(self):\n",
+    "        pass\n",
+    "    \n",
+    "    def predict(self, x):\n",
+    "        '''This method takes in x (numpy array) and returns a prediction y'''\n",
+    "        pass\n",
+    "    \n",
+    "    def fit(self, *data):\n",
+    "        '''This method is used for fitting a model to data: x, y'''\n",
+    "        pass\n",
+    "        "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Priors(Classifier):\n",
+    "    ''' A classifier that uses only priors to determine what to output'''\n",
+    "    def __init__(self):\n",
+    "        self.class_priors =  # Dictionary that maps Class to Prior {Class1:Prior1, Class2:Prior2, ...}\n",
+    "        \n",
+    "    def predict(self, x):\n",
+    "        '''Always Returns the key corrsponding to the max value of the class_priors'''\n",
+    "\n",
+    "    \n",
+    "    def fit(self, *data):\n",
+    "        ''' Calculates class_priors from data (x, y) and stores them'''\n",
+    "        pass\n",
+    " \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Create your Stress Classifier from Priors() and fit to your data (dataX, dataY)'''\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Plot your predictions from an input of 50 to 150'''\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Bayesian(Classifier):\n",
+    "    ''' A classifier that uses a subjective approach (Gaussian Model)'''\n",
+    "    def __init__(self):\n",
+    "        self.class_priors =   # Dictionary that maps Class to Prior {Class1:Prior1, Class2:Prior2, ...}\n",
+    "        self.model_params =   # Dictionary that maps Class to our model parameters {Class1: (mu, sigma), Class2: (mu, sigma)}\n",
+    "        \n",
+    "    def gaussian_model(self, x, mu, sigma):\n",
+    "        ''' Returns the value of a univariate gaussian'''\n",
+    "        pass\n",
+    "        \n",
+    "        \n",
+    "    def predict(self, x):\n",
+    "        '''Returns the argmax posterier'''\n",
+    "        pass\n",
+    "    \n",
+    "    def fit(self, *data):\n",
+    "        ''' Calculates class_priors and model parameters from data (x, y) and stores them'''\n",
+    "        pass\n",
+    "        \n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Create your Stress Classifier from Bayesian() and fit to your data (dataX, dataY)'''\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "''' Plot your predictions from an input of 50 to 150'''\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
